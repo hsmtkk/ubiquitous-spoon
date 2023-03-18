@@ -22,7 +22,7 @@ class MyStack extends TerraformStack {
     const assetBucket = new google.storageBucket.StorageBucket(this, 'assetBucket', {
       lifecycleRule: [{
         action: {
-          type: 'delete',
+          type: 'Delete',
         },
         condition: {
           age: 1,
@@ -35,7 +35,7 @@ class MyStack extends TerraformStack {
     const sourceBucket = new google.storageBucket.StorageBucket(this, 'sourceBucket', {
       lifecycleRule: [{
         action: {
-          type: 'delete',
+          type: 'Delete',
         },
         condition: {
           age: 1,
@@ -48,7 +48,7 @@ class MyStack extends TerraformStack {
     const destinationBucket = new google.storageBucket.StorageBucket(this, 'destinationBucket', {
       lifecycleRule: [{
         action: {
-          type: 'delete',
+          type: 'Delete',
         },
         condition: {
           age: 1,
@@ -79,6 +79,7 @@ class MyStack extends TerraformStack {
           },
         },
       },
+      location: region,
       name: 'thumbnail-maker',
       serviceConfig: {
         environmentVariables: {
