@@ -19,6 +19,12 @@ class MyStack extends TerraformStack {
       accountId: 'function-runner',
     });
 
+    new google.projectIamMember.ProjectIamMember(this, 'allowFunctionStorageAccess', {
+      member: `serviceAccount:${functionRunner.email}`,
+      project,
+      role: 'roles/storage.objectAdmin',
+    });
+
     const assetBucket = new google.storageBucket.StorageBucket(this, 'assetBucket', {
       lifecycleRule: [{
         action: {
