@@ -45,14 +45,17 @@ func (t *makerImpl) Make(input io.Reader, output io.Writer, size int) error {
 		if err := gif.Encode(output, newRect, nil); err != nil {
 			return fmt.Errorf("failed to encode gif; %w", err)
 		}
+		return nil
 	case "jpeg":
 		if err := jpeg.Encode(output, newRect, nil); err != nil {
 			return fmt.Errorf("failed to encode jpeg; %w", err)
 		}
+		return nil
 	case "png":
 		if err := png.Encode(output, newRect); err != nil {
 			return fmt.Errorf("failed to encode png; %w", err)
 		}
+		return nil
 	}
-	return fmt.Errorf("unsupported image type %s; %w", imageType, err)
+	return fmt.Errorf("unsupported image type %s", imageType)
 }
