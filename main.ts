@@ -71,6 +71,7 @@ class MyStack extends TerraformStack {
 
     new google.cloudfunctions2Function.Cloudfunctions2Function(this, 'thumbnailMaker', {
       buildConfig: {
+        entryPoint: 'EntryPoint',
         runtime: 'go120',
         source: {
           storageSource: {
@@ -84,6 +85,7 @@ class MyStack extends TerraformStack {
       serviceConfig: {
         environmentVariables: {
           'DESTINATION_BUCKET': destinationBucket.name,
+          'THUMBNAIL_SIZE': '128',
         },
         minInstanceCount: 0,
         maxInstanceCount: 1,
@@ -107,6 +109,14 @@ class MyStack extends TerraformStack {
           branch: 'main',
         },
       },
+    });
+
+    const storageAccount = new google.dataGoogleStorageProjectServiceAccount.DataGoogleStorageProjectServiceAccount(this, 'storageAccount');
+
+    new google.projectIamMember.ProjectIamMember(this, 'storageAccountPubSub', {
+      member: `serviceAccount:${storageAccount.emailAddress}`,
+      project,
+      role: 'roles/pubsub.publisher',
     });
 
   }
